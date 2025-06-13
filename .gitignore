@@ -44,3 +44,4 @@ next-env.d.ts
 node_modules/
 .env
 .next\nnode_modules\n.env
+public/alexcpr-hero.mp4
