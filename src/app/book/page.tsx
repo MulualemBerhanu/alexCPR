@@ -20,7 +20,7 @@ type ClassType = {
   comingSoon?: boolean;
 };
 
-// Reuse the classes array from Classes page
+// Reuse the classes array from Classes page for schedule
 const classes = [
   {
     id: "adult-cpr",
