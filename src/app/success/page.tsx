@@ -1,11 +1,10 @@
 "use client";
+export const dynamic = "force-dynamic";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import Link from 'next/link';
-import { Suspense } from "react";
-
-function SuccessContent() {
+export default function SuccessPage() {
   const searchParams = useSearchParams();
   const sessionId = searchParams.get('session_id');
   const [loading, setLoading] = useState(true);
@@ -139,13 +138,5 @@ function SuccessContent() {
         </div>
       </div>
     </div>
-  );
-}
-
-export default function SuccessPage() {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <SuccessContent />
-    </Suspense>
   );
 } 
