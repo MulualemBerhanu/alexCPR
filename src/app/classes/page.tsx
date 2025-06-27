@@ -18,7 +18,7 @@ const classes: ClassType[] = [
     id: "adult-first-aid-cpr-aed",
     title: "Adult First Aid, CPR AED and Infant/Child CPR AED",
     price: 80,
-    duration: "6 hours",
+    duration: "4 hours",
     description: "Comprehensive training covering adult and pediatric CPR, AED usage, and First Aid. This complete course prepares you to handle emergency situations for all age groups with confidence.",
     includes: [
       "Adult CPR and AED training",
