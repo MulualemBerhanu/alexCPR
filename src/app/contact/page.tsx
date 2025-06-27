@@ -10,6 +10,7 @@ const formSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Please enter a valid email address'),
   reason: z.string().min(2, 'Please select a reason'),
+  phone: z.string().min(7, 'Phone must be at least 7 digits'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
 
@@ -87,8 +88,9 @@ export default function ContactPage() {
     watch('name')?.length > 1,
     watch('email')?.length > 3 && watch('email')?.includes('@'),
     reason && reason.length > 1,
+    watch('phone')?.length > 6,
     watch('message')?.length > 9,
-  ].filter(Boolean).length / 4 * 100;
+  ].filter(Boolean).length / 5 * 100;
 
   return (
     <div className="min-h-screen py-0 bg-gradient-to-br from-red-50 via-white to-red-100 relative">
@@ -204,6 +206,21 @@ export default function ContactPage() {
               />
               {errors.email && (
                 <p id="email-error" className="mt-1 text-sm text-red-600">{errors.email.message}</p>
+              )}
+            </div>
+            <div>
+              <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone</label>
+              <input
+                type="tel"
+                id="phone"
+                {...register('phone')}
+                className="w-full px-4 py-2 border rounded-md focus:ring-2 focus:ring-red-500 focus:border-transparent bg-white/80"
+                placeholder="Your phone number"
+                aria-invalid={!!errors.phone}
+                aria-describedby="phone-error"
+              />
+              {errors.phone && (
+                <p id="phone-error" className="mt-1 text-sm text-red-600">{errors.phone.message}</p>
               )}
             </div>
             <div>

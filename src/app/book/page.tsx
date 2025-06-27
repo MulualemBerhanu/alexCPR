@@ -279,7 +279,6 @@ export default function BookPage() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
               className={`relative bg-white rounded-2xl shadow-lg overflow-hidden transform transition-all duration-300 hover:shadow-xl hover:-translate-y-1 cursor-pointer ${isSelected ? 'ring-4 ring-red-400 scale-105 z-10' : ''}`}
               tabIndex={0}
-              aria-selected={isSelected}
               onClick={() => { setSelectedClass(classItem); setTimeout(() => nextBtnRef.current?.scrollIntoView({ behavior: 'smooth' }), 200); }}
               onKeyDown={e => {
                 if (e.key === 'Enter' || e.key === ' ') {

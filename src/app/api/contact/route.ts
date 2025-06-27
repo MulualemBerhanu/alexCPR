@@ -2,13 +2,14 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request: Request) {
   try {
-    const { name, email, message } = await request.json();
+    const { name, email, message, phone } = await request.json();
     const apiKey = process.env.BREVO_API_KEY;
-    const toEmail = process.env.TO_EMAIL || 'contact@alexcpr.com';
-    const fromEmail = process.env.FROM_EMAIL || 'no-reply@alexcpr.com';
+    const toEmail = process.env.CONTACT_TO_EMAIL || "ruthalex57@hotmail.com";
+    const fromEmail = process.env.CONTACT_FROM_EMAIL || "ruthalex57@hotmail.com";
 
     if (!apiKey) {
-      return NextResponse.json({ error: 'Missing Brevo API key' }, { status: 500 });
+      console.error('BREVO_API_KEY environment variable is not set');
+      return NextResponse.json({ error: 'Email service not configured' }, { status: 500 });
     }
 
     // Send email using Brevo API
@@ -27,6 +28,7 @@ export async function POST(request: Request) {
           <h2>New Contact Form Submission</h2>
           <p><strong>Name:</strong> ${name}</p>
           <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Phone:</strong> ${phone || 'N/A'}</p>
           <p><strong>Message:</strong></p>
           <p>${message}</p>
         `,
