@@ -87,18 +87,18 @@ export function Footer() {
             <h3 className="text-lg font-semibold text-red-900 mb-4">Classes</h3>
             <ul className="space-y-3">
               <li>
-                <Link href="/book?class=adult-cpr" className="text-gray-600 hover:text-red-600 transition-colors">
-                  Adult CPR
+                <Link href="/book?class=adult-first-aid-cpr-aed" className="text-gray-600 hover:text-red-600 transition-colors">
+                  Adult First Aid, CPR AED and Infant/Child CPR AED
                 </Link>
               </li>
               <li>
-                <Link href="/book?class=child-cpr" className="text-gray-600 hover:text-red-600 transition-colors">
-                  Infant/Child CPR
+                <Link href="/book?class=bloodborne-pathogens" className="text-gray-600 hover:text-red-600 transition-colors">
+                  Bloodborne Pathogens (BBP)
                 </Link>
               </li>
               <li>
-                <Link href="/book?class=first-aid-cpr" className="text-gray-600 hover:text-red-600 transition-colors">
-                  First Aid + CPR
+                <Link href="/book?class=defensive-driving" className="text-gray-600 hover:text-red-600 transition-colors">
+                  Defensive Driver Safety
                 </Link>
               </li>
             </ul>

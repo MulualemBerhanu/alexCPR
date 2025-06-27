@@ -2,53 +2,39 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const classes = [
+type ClassType = {
+  id: string;
+  title: string;
+  price: number | null;
+  duration: string;
+  description: string;
+  includes: string[];
+  comingSoon?: boolean;
+  contactOnly?: boolean;
+};
+
+const classes: ClassType[] = [
   {
-    id: "adult-cpr",
-    title: "Adult CPR",
+    id: "adult-first-aid-cpr-aed",
+    title: "Adult First Aid, CPR AED and Infant/Child CPR AED",
     price: 80,
-    duration: "4 hours",
-    description: "Learn essential CPR techniques for adults. This comprehensive course covers recognition of cardiac arrest, proper chest compression techniques, rescue breathing, and use of an AED.",
+    duration: "6 hours",
+    description: "Comprehensive training covering adult and pediatric CPR, AED usage, and First Aid. This complete course prepares you to handle emergency situations for all age groups with confidence.",
     includes: [
-      "Hands-on practice with mannequins",
-      "AED training",
+      "Adult CPR and AED training",
+      "Infant and Child CPR techniques",
+      "First Aid certification",
+      "Wound care and emergency response",
       "2-year certification upon completion",
+      "Hands-on practice with mannequins",
       "Digital learning materials",
       "Small class size for personalized attention"
     ]
   },
   {
-    id: "child-cpr",
-    title: "Infant/Child CPR",
-    price: 80,
-    duration: "4 hours",
-    description: "Specialized training focused on CPR techniques for infants and children. Learn the unique approaches required for different age groups and common emergency scenarios.",
-    includes: [
-      "Age-specific CPR techniques",
-      "Choking relief procedures",
-      "2-year certification upon completion",
-      "Take-home reference materials",
-      "Practice with infant and child mannequins"
-    ]
-  },
-  {
-    id: "first-aid-cpr",
-    title: "First Aid + CPR",
-    price: 80,
-    duration: "4 hours",
-    description: "Complete emergency response training combining CPR and First Aid. This comprehensive course prepares you to handle various emergency situations with confidence.",
-    includes: [
-      "Full CPR certification",
-      "First Aid certification",
-      "Wound care training",
-      "Emergency response protocols",
-      "Hands-on practice with real equipment"
-    ]
-  },
-  {
     id: "bloodborne-pathogens",
     title: "Bloodborne Pathogens (BBP)",
-    price: 80,
+    price: 60,
     duration: "2 hours",
     description: "OSHA-compliant training for handling bloodborne pathogens and maintaining workplace safety. Essential for healthcare workers and first responders.",
     includes: [
@@ -85,7 +71,8 @@ const classes = [
       "HR/Payroll task handling (Tier 2)",
       "Hands-on practice with simulations",
       "Helpful take-home reference guides"
-    ]
+    ],
+    contactOnly: true
   },
   {
     id: "ois",
@@ -165,15 +152,15 @@ export default function ClassesPage() {
                       </p>
                     </div>
                     <div className="mt-4 md:mt-0">
-                      {classItem.price ? (
+                      {classItem.price && !classItem.contactOnly ? (
                         <p className="text-3xl font-bold text-red-600">
                           ${classItem.price}
                         </p>
-                      ) : (
+                      ) : classItem.comingSoon ? (
                         <span className="inline-block bg-gray-200 text-gray-600 px-4 py-2 rounded-full text-sm font-medium">
                           Coming Soon
                         </span>
-                      )}
+                      ) : null}
                     </div>
                   </div>
 
@@ -197,18 +184,29 @@ export default function ClassesPage() {
                     </ul>
                   </div>
 
-                  {classItem.comingSoon ? (
-                    <div className="text-center text-gray-500 italic">
-                      This course will be available soon. Stay tuned for updates!
-                    </div>
-                  ) : (
-                    <Link
-                      href={`/book?class=${classItem.id}`}
-                      className="block w-full md:w-auto text-center bg-red-600 text-white px-8 py-3 rounded-full hover:bg-red-700 transition-colors transform hover:scale-105"
-                    >
-                      Book This Class
-                    </Link>
-                  )}
+                  <div className="flex gap-4 mt-4">
+                    {!classItem.comingSoon && !classItem.contactOnly && (
+                      <Link
+                        href={`/book?class=${classItem.id}`}
+                        className="bg-red-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-red-700 transition-all"
+                      >
+                        Book Now
+                      </Link>
+                    )}
+                    {classItem.contactOnly && (
+                      <Link
+                        href="/contact"
+                        className="bg-blue-600 text-white px-6 py-2 rounded-full font-semibold shadow hover:bg-blue-700 transition-all"
+                      >
+                        Contact Us
+                      </Link>
+                    )}
+                    {classItem.comingSoon && (
+                      <div className="text-center text-gray-500 italic">
+                        This course will be available soon. Stay tuned for updates!
+                      </div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             ))}

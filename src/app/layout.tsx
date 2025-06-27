@@ -28,6 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" type="image/svg+xml" href="/favIcon.svg" />
+      </head>
       <body className={`${geist.className} min-h-screen flex flex-col`}>
         <Navbar />
         <main className="flex-grow pt-16">
