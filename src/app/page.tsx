@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { useRef } from "react";
 
 const stats = [
   {
@@ -43,6 +44,27 @@ const stats = [
 ];
 
 export default function Home() {
+  // Parallax effect for video card
+  const videoCardRef = useRef<HTMLDivElement>(null);
+
+  // Parallax mouse handler
+  function handleParallax(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    const card = videoCardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * 8; // max 8deg
+    const rotateY = ((x - centerX) / centerX) * -8;
+    card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+  }
+  function resetParallax() {
+    const card = videoCardRef.current;
+    if (card) card.style.transform = "rotateX(0deg) rotateY(0deg)";
+  }
+
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
@@ -61,8 +83,8 @@ export default function Home() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <div className="inline-block mb-4">
-                <span className="bg-red-100 text-red-800 text-sm font-medium px-4 py-1 rounded-full">
+              <div className="inline-block mt-4 ml-1 mb-4">
+                <span className="bg-red-100 text-red-800 text-xs sm:text-sm font-medium px-4 py-1 rounded-full text-center whitespace-normal">
                   Professional CPR Training
                 </span>
               </div>
@@ -107,7 +129,7 @@ export default function Home() {
               <div className="mt-12 flex items-center gap-6 text-gray-600">
                 <div className="flex items-center gap-2">
                   <svg className="w-5 h-5 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
                   </svg>
                   <span className="text-sm">Certified Training</span>
                 </div>
@@ -133,8 +155,24 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="relative group"
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-red-500 to-red-600 rounded-2xl transform rotate-6 scale-95 transition-transform duration-300 group-hover:rotate-4 group-hover:scale-105" />
-              <div className="relative bg-white rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 group-hover:scale-[1.02] group-hover:shadow-2xl">
+              {/* Red Accent Card Behind Video with Heart Watermark */}
+              <div className="absolute -top-8 sm:-top-12 -left-8 sm:-left-16 w-[120%] h-[70%] sm:w-[110%] sm:h-[80%] bg-gradient-to-tr from-red-500 to-red-400 rounded-3xl sm:rounded-[2.5rem] -rotate-6 shadow-2xl z-0 animate-card-glow overflow-hidden">
+                <svg className="absolute inset-0 w-full h-full opacity-10 animate-heartbeat" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16 29s-13-7.434-13-17A7 7 0 0116 7a7 7 0 0113 5c0 9.566-13 17-13 17z" fill="#fff"/>
+                </svg>
+              </div>
+              {/* Floating SVG icons */}
+              <svg className="absolute -top-6 -left-6 w-10 h-10 text-red-200 animate-float-slow z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" /></svg>
+              <svg className="absolute -bottom-8 left-1/2 w-8 h-8 text-red-100 animate-float-fast z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" strokeWidth="2" /></svg>
+              <svg className="absolute top-1/2 -right-8 w-12 h-12 text-red-100 animate-float-slow z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" strokeWidth="2" /></svg>
+              <svg className="absolute top-8 right-1/3 w-7 h-7 text-red-200 animate-float-fast z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+              <div
+                ref={videoCardRef}
+                onMouseMove={handleParallax}
+                onMouseLeave={resetParallax}
+                className="relative bg-white rounded-2xl shadow-xl overflow-hidden transition-transform duration-300 group-hover:scale-105 group-hover:brightness-110 group-hover:shadow-2xl animate-card-glow z-20 border-4 border-transparent bg-clip-padding border-gradient-to-tr from-red-400 via-pink-300 to-red-500 animate-gradient-border"
+                style={{ willChange: 'transform' }}
+              >
                 <div className="relative aspect-video">
                   {/* Video Container */}
                   <div className="relative w-full h-full">
@@ -148,26 +186,17 @@ export default function Home() {
                       <source src="/alexcpr-hero.mp4" type="video/mp4" />
                       Your browser does not support the video tag.
                     </video>
-
-                    {/* Simple Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                    {/* Shimmer overlay (desktop only) */}
+                    <div className="hidden sm:block animate-shimmer pointer-events-none" />
                   </div>
                 </div>
-
-                {/* Simple Info Bar */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
-                  <p className="text-white text-sm font-medium">
-                    CPR Training Session
+                {/* Floating Badge with glassmorphism and animation */}
+                <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 sm:bottom-4 sm:right-4 sm:left-auto sm:transform-none bg-white/60 backdrop-blur-md px-2 py-1 sm:px-6 sm:py-2 rounded-full shadow-lg max-w-[95vw] sm:max-w-fit w-fit animate-bounce-slow border border-white/40">
+                  <p className="text-gray-700 text-xs sm:text-sm font-semibold flex items-center justify-center space-x-2 whitespace-normal sm:whitespace-nowrap text-center leading-tight">
+                    <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse mr-1 sm:mr-0" />
+                    <span>Real hands-on CPR instruction</span>
                   </p>
                 </div>
-              </div>
-
-              {/* Bottom Label */}
-              <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-2 rounded-full shadow-lg">
-                <p className="text-gray-600 text-sm font-medium flex items-center space-x-2">
-                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse" />
-                  <span>Real hands-on CPR instruction</span>
-                </p>
               </div>
             </motion.div>
           </div>

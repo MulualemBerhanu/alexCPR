@@ -159,3 +159,77 @@
 .animate-heartbeat {
   animation: heartbeat 1.2s infinite;
 }
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+}
+
+@keyframes float-fast {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+.animate-float-fast {
+  animation: float-fast 3s ease-in-out infinite;
+}
+
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2.5s infinite;
+}
+
+/* Advanced: subtle glowing effect for the card */
+@keyframes card-glow {
+  0%, 100% { box-shadow: 0 0 32px 0 rgba(220,38,38,0.12), 0 2px 8px 0 rgba(0,0,0,0.04); }
+  50% { box-shadow: 0 0 48px 8px rgba(220,38,38,0.18), 0 4px 16px 0 rgba(0,0,0,0.08); }
+}
+.animate-card-glow {
+  animation: card-glow 4s ease-in-out infinite;
+}
+
+@keyframes gradient-border {
+  0%, 100% { border-image-source: linear-gradient(120deg, #f87171, #f472b6, #f87171); }
+  50% { border-image-source: linear-gradient(240deg, #f87171, #f472b6, #f87171); }
+}
+.animate-gradient-border {
+  border-width: 4px;
+  border-style: solid;
+  border-image-slice: 1;
+  border-image-source: linear-gradient(120deg, #f87171, #f472b6, #f87171);
+  animation: gradient-border 6s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -60%; }
+  100% { left: 120%; }
+}
+.animate-shimmer {
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.25) 50%, rgba(255,255,255,0) 100%);
+  filter: blur(2px);
+  pointer-events: none;
+  animation: shimmer 1.2s linear forwards;
+}
+
+.group:hover .animate-shimmer {
+  animation: shimmer 1.2s linear;
+}
+
+@keyframes float-fast-hover {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-32px); }
+}
+.group:hover .animate-float-slow, .group:hover .animate-float-fast {
+  animation-duration: 1.5s !important;
+  animation-timing-function: cubic-bezier(0.4,0,0.2,1) !important;
+}
