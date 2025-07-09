@@ -103,6 +103,18 @@ const classes: ClassType[] = [
       "Hands-on safety demonstrations"
     ],
     comingSoon: true
+  },
+  {
+    id: "test-class",
+    title: "Test Payment Class",
+    price: 5,
+    duration: "5 minutes",
+    description: "This is a test class for payment integration. Use this to test the Stripe payment flow with a $5 charge.",
+    includes: [
+      "Test payment integration",
+      "No real class provided",
+      "For development/testing only"
+    ]
   }
 ];
 
