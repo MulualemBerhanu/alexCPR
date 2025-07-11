@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 
 export async function POST(request: Request) {
   try {
-    const { classId, className, price } = await request.json();
+    const { classId, className, price, customerName, customerEmail, customerPhone, bookingDate, bookingTime } = await request.json();
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3001';
 
     // Create Stripe checkout session
@@ -34,9 +34,14 @@ export async function POST(request: Request) {
       mode: 'payment',
       success_url: `${baseUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/book?class=${classId}`,
+      customer_email: customerEmail,
       metadata: {
         classId,
         className,
+        customerName: customerName || '',
+        customerPhone: customerPhone || '',
+        bookingDate: bookingDate || '',
+        bookingTime: bookingTime || '',
       },
     });
 

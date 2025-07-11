@@ -491,7 +491,7 @@ export default function BookPage() {
 
   // Step 3: Payment
   const handlePayment = async () => {
-    if (!selectedClass) return;
+    if (!selectedClass || !formData) return;
     try {
       const response = await fetch('/api/checkout-session', {
         method: 'POST',
@@ -500,6 +500,11 @@ export default function BookPage() {
           classId: selectedClass.id,
           className: selectedClass.title,
           price: selectedClass.price,
+          customerName: formData.name,
+          customerEmail: formData.email,
+          customerPhone: formData.phone,
+          bookingDate: formData.date,
+          bookingTime: formData.time,
         }),
       });
       const data = await response.json();
