@@ -60,21 +60,6 @@ const classes: ClassType[] = [
     ]
   },
   {
-    id: "workday-training",
-    title: "Workday Training (Tier 1 & 2)",
-    price: 80,
-    duration: "3 hours",
-    description: "Master Workday navigation and workflows with hands-on training. Perfect for employees and HR professionals looking to enhance their system proficiency.",
-    includes: [
-      "Intro to Workday navigation and workflows",
-      "Employee self-service and task processing",
-      "HR/Payroll task handling (Tier 2)",
-      "Hands-on practice with simulations",
-      "Helpful take-home reference guides"
-    ],
-    contactOnly: true
-  },
-  {
     id: "ois",
     title: "Oregon Intervention System (OIS)",
     price: null,
@@ -88,33 +73,6 @@ const classes: ClassType[] = [
       "Certification upon completion"
     ],
     comingSoon: true
-  },
-  {
-    id: "firearm-safety",
-    title: "Firearm Safety & Responsibility",
-    price: null,
-    duration: "TBD",
-    description: "Comprehensive firearm safety training covering safe handling, legal responsibilities, and secure storage. Ideal for civilians, new owners, and security personnel.",
-    includes: [
-      "Safe firearm handling techniques",
-      "Legal responsibilities and regulations",
-      "Secure storage practices",
-      "Emergency response protocols",
-      "Hands-on safety demonstrations"
-    ],
-    comingSoon: true
-  },
-  {
-    id: "test-class",
-    title: "Test Payment Class",
-    price: 5,
-    duration: "5 minutes",
-    description: "This is a test class for payment integration. Use this to test the Stripe payment flow with a $5 charge.",
-    includes: [
-      "Test payment integration",
-      "No real class provided",
-      "For development/testing only"
-    ]
   }
 ];
 
