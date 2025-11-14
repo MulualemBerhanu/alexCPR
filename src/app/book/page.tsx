@@ -137,6 +137,7 @@ export default function BookPage() {
   const todayDate = getPSTDate(new Date());
   const [dateObj, setDateObj] = useState<Date>(todayDate);
   const [selectedTime, setSelectedTime] = useState('');
+  const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   // Booking form
   const {
@@ -465,7 +466,9 @@ export default function BookPage() {
 
   // Step 3: Payment
   const handlePayment = async () => {
-    if (!selectedClass || !formData) return;
+    if (!selectedClass || !formData || isProcessingPayment) return;
+    
+    setIsProcessingPayment(true);
     try {
       const response = await fetch('/api/checkout-session', {
         method: 'POST',
@@ -486,6 +489,7 @@ export default function BookPage() {
       const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
       if (stripe) await stripe.redirectToCheckout({ sessionId: data.sessionId });
     } catch (error: unknown) {
+      setIsProcessingPayment(false);
       if (error instanceof Error) {
         console.error('Payment error:', error.message);
       } else {
@@ -533,10 +537,11 @@ export default function BookPage() {
           Back
         </button>
         <button
-          className="bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-red-700 transition-all"
+          className="bg-red-600 text-white px-8 py-3 rounded-full font-semibold shadow-lg hover:bg-red-700 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           onClick={handlePayment}
+          disabled={isProcessingPayment}
         >
-          Proceed to Payment
+          {isProcessingPayment ? 'Processing...' : 'Proceed to Payment'}
         </button>
       </div>
     </div>

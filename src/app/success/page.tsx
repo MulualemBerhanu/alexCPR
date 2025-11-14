@@ -2,7 +2,7 @@
 export const dynamic = "force-dynamic";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { useEffect, useState, Suspense } from "react";
+import { useEffect, useState, Suspense, useRef } from "react";
 
 function SuccessPageContent() {
   const searchParams = useSearchParams();
@@ -13,9 +13,21 @@ function SuccessPageContent() {
     className: string;
     email: string;
   } | null>(null);
+  const hasVerified = useRef(false);
 
   useEffect(() => {
+    // Prevent multiple verification calls
+    if (hasVerified.current) return;
+    
     const verifyPayment = async () => {
+      if (!sessionId) {
+        setLoading(false);
+        setError('No payment session found');
+        return;
+      }
+
+      hasVerified.current = true;
+      
       try {
         const response = await fetch(`/api/verify-payment?session_id=${sessionId}`);
         const data = await response.json();
@@ -33,12 +45,7 @@ function SuccessPageContent() {
       }
     };
 
-    if (sessionId) {
-      verifyPayment();
-    } else {
-      setLoading(false);
-      setError('No payment session found');
-    }
+    verifyPayment();
   }, [sessionId]);
 
   if (loading) {

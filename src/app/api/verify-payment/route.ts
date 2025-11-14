@@ -5,6 +5,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
   apiVersion: '2025-05-28.basil',
 });
 
+// In-memory cache to track processed sessions and prevent duplicate emails
+// In production, consider using a database or Redis for persistence across server restarts
+const processedSessions = new Set<string>();
+
 // Helper function to send email using Brevo
 async function sendEmail(toEmail: string, subject: string, htmlContent: string) {
   const apiKey = process.env.BREVO_API_KEY;
@@ -75,9 +79,12 @@ export async function GET(request: Request) {
     const bookingDate = session.metadata?.bookingDate || '';
     const bookingTime = session.metadata?.bookingTime || '';
 
-    // Only send emails if payment was successful
-    if (paymentStatus === 'paid') {
+    // Only send emails if payment was successful and emails haven't been sent yet
+    if (paymentStatus === 'paid' && !processedSessions.has(sessionId)) {
       const adminEmail = process.env.CONTACT_TO_EMAIL || "ruthalex57@hotmail.com";
+      
+      // Mark this session as processed before sending emails to prevent race conditions
+      processedSessions.add(sessionId);
       
       // Styled summary for both admin and customer
       const summaryHtml = `
